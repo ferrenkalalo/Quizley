@@ -1,10 +1,10 @@
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import React from 'react';
 
-const Options = ({option}) => {
+const Options = ({option, onPress}) => {
   return (
     <View style={styles.wrapper}>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={onPress}>
         <View style={styles.container}>
           <Text style={styles.text}>{option}</Text>
         </View>
@@ -22,15 +22,16 @@ const styles = StyleSheet.create({
   },
   container: {
     backgroundColor: '#4B8673',
-    width: 320,
-    height: 60,
+    width: 330,
+    height: 70,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 20,
-    marginBottom: 30,
+    borderRadius: 30,
+    marginBottom: 20,
+    paddingHorizontal: 5,
   },
   text: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: '500',
     color: '#FDFAF6',
   },

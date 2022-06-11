@@ -8,6 +8,7 @@ const Quiz = ({navigation}) => {
   const [question, setQuestion] = useState();
   const [ques, setQues] = useState(0);
   const [opt, setOpt] = useState([]);
+  const [score, setScore] = useState(0);
 
   const shuffleArray = array => {
     for (let i = array.length - 1; i > 0; i--) {
@@ -43,6 +44,18 @@ const Quiz = ({navigation}) => {
     return opt;
   };
 
+  const answer = _opt => {
+    if (_opt === question[ques].correct_answer) {
+      setScore(score + 1);
+    }
+    if (ques !== 14) {
+      nextQues();
+    } else {
+      navigation.navigate('Result');
+    }
+    console.log(score);
+  };
+
   return (
     <View style={styles.container}>
       {question && (
@@ -51,18 +64,30 @@ const Quiz = ({navigation}) => {
             <Questions text={decodeURIComponent(question[ques].question)} />
           </View>
           <View>
-            <Options option={decodeURIComponent(opt[0])} />
-            <Options option={decodeURIComponent(opt[1])} />
-            <Options option={decodeURIComponent(opt[2])} />
-            <Options option={decodeURIComponent(opt[3])} />
+            <Options
+              option={decodeURIComponent(opt[0])}
+              onPress={() => answer(opt[0])}
+            />
+            <Options
+              option={decodeURIComponent(opt[1])}
+              onPress={() => answer(opt[1])}
+            />
+            <Options
+              option={decodeURIComponent(opt[2])}
+              onPress={() => answer(opt[2])}
+            />
+            <Options
+              option={decodeURIComponent(opt[3])}
+              onPress={() => answer(opt[3])}
+            />
           </View>
 
           <View style={styles.buttonContainer}>
-            <Button title={'Skip'} />
+            <Button title={'Previous'} />
 
             {ques !== 14 && (
               <Button
-                title={'Next'}
+                title={'SKIP'}
                 fontWeight={'bold'}
                 onPress={() => nextQues()}
               />
@@ -89,7 +114,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#E4EFE7',
   },
   buttonContainer: {
-    marginTop: 60,
+    marginTop: 45,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-end',
