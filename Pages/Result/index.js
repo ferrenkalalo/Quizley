@@ -1,11 +1,11 @@
 import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
 import React from 'react';
 
-const Result = () => {
+const Result = ({navigation}) => {
   return (
     <View style={styles.container}>
       <View style={styles.iconContainer}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('Home')}>
           <Image
             source={require('../../Assets/Images/HomeIcon.png')}
             style={{width: 30, height: 30}}
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     flexDirection: 'row',
-    margin: 20,
+    margin: 25,
   },
   emotContainer: {
     justifyContent: 'center',

@@ -1,11 +1,11 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 
-const Questions = () => {
+const Questions = ({text}) => {
   return (
     <View style={styles.wrapper}>
       <View style={styles.container}>
-        <Text style={styles.text}>Questions Here</Text>
+        <Text style={styles.text}>{text}</Text>
       </View>
     </View>
   );
@@ -23,14 +23,13 @@ const styles = StyleSheet.create({
     width: 320,
     height: 200,
     borderColor: '#064420',
-    borderRadius: 1,
     borderWidth: 0.5,
     alignItems: 'center',
     justifyContent: 'center',
   },
   text: {
-    fontSize: 22,
-    fontWeight: 'bold',
+    fontSize: 23,
+    fontWeight: '500',
     color: '#064420',
   },
 });
