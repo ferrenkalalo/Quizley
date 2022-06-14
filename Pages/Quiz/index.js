@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, Image} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import Questions from '../../Components/Questions';
 import Options from '../../Components/Options';
@@ -9,6 +9,7 @@ const Quiz = ({navigation}) => {
   const [ques, setQues] = useState(0);
   const [opt, setOpt] = useState([]);
   const [score, setScore] = useState(0);
+  const [Loading, setLoading] = useState(false);
 
   const shuffleArray = array => {
     for (let i = array.length - 1; i > 0; i--) {
@@ -18,12 +19,14 @@ const Quiz = ({navigation}) => {
   };
 
   const getQuiz = async () => {
+    setLoading(true);
     const url =
       'https://opentdb.com/api.php?amount=10&type=multiple&encode=url3986';
     const response = await fetch(url);
     const data = await response.json();
     setQuestion(data.results);
     setOpt(generateOptAndShuffle(data.results[0]));
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -62,49 +65,58 @@ const Quiz = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-      {question && (
-        <View style={styles.parent}>
-          <View>
-            <Questions text={decodeURIComponent(question[ques].question)} />
-          </View>
-          <View>
-            <Options
-              option={decodeURIComponent(opt[0])}
-              onPress={() => answer(opt[0])}
-            />
-            <Options
-              option={decodeURIComponent(opt[1])}
-              onPress={() => answer(opt[1])}
-            />
-            <Options
-              option={decodeURIComponent(opt[2])}
-              onPress={() => answer(opt[2])}
-            />
-            <Options
-              option={decodeURIComponent(opt[3])}
-              onPress={() => answer(opt[3])}
-            />
-          </View>
-
-          <View style={styles.buttonContainer}>
-            <Button title={'PREV'} />
-
-            {ques !== 9 && (
-              <Button
-                title={'SKIP'}
-                fontWeight={'bold'}
-                onPress={() => nextQues()}
-              />
-            )}
-            {ques === 9 && (
-              <Button
-                title={'Finish'}
-                fontWeight={'bold'}
-                onPress={() => showResult()}
-              />
-            )}
-          </View>
+      {Loading ? (
+        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+          <Image
+            source={require('../../Assets/Images/LoadingIcon.png')}
+            style={{width: 200, height: 200}}
+          />
         </View>
+      ) : (
+        question && (
+          <View style={styles.parent}>
+            <View>
+              <Questions text={decodeURIComponent(question[ques].question)} />
+            </View>
+            <View>
+              <Options
+                option={decodeURIComponent(opt[0])}
+                onPress={() => answer(opt[0])}
+              />
+              <Options
+                option={decodeURIComponent(opt[1])}
+                onPress={() => answer(opt[1])}
+              />
+              <Options
+                option={decodeURIComponent(opt[2])}
+                onPress={() => answer(opt[2])}
+              />
+              <Options
+                option={decodeURIComponent(opt[3])}
+                onPress={() => answer(opt[3])}
+              />
+            </View>
+
+            <View style={styles.buttonContainer}>
+              <Button title={'PREV'} />
+
+              {ques !== 9 && (
+                <Button
+                  title={'SKIP'}
+                  fontWeight={'bold'}
+                  onPress={() => nextQues()}
+                />
+              )}
+              {ques === 9 && (
+                <Button
+                  title={'Finish'}
+                  fontWeight={'bold'}
+                  onPress={() => showResult()}
+                />
+              )}
+            </View>
+          </View>
+        )
       )}
     </View>
   );

@@ -1,9 +1,30 @@
-import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  Alert,
+} from 'react-native';
 import React from 'react';
 import {BackHandler} from 'react-native';
 
 const Result = ({navigation, route}) => {
   const {score} = route.params;
+
+  const BackHome = () => {
+    Alert.alert('Back Home', 'Do you wanna go to Home Screen?', [
+      {text: 'NO', onPress: () => null, style: 'cancel'},
+      {text: 'YES', onPress: () => navigation.navigate('Home')},
+    ]);
+  };
+
+  const Exit = () => {
+    Alert.alert('Exit App', 'Do you want to exit', [
+      {text: 'NO', onPress: () => null, style: 'cancel'},
+      {text: 'YES', onPress: () => BackHandler.exitApp()},
+    ]);
+  };
 
   return (
     <View style={styles.container}>
@@ -28,13 +49,13 @@ const Result = ({navigation, route}) => {
         </View>
       </View>
       <View style={styles.iconContainer}>
-        <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+        <TouchableOpacity onPress={() => BackHome()}>
           <Image
             source={require('../../Assets/Images/HomeIcon.png')}
             style={{width: 30, height: 30}}
           />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => BackHandler.exitApp()}>
+        <TouchableOpacity onPress={() => Exit()}>
           <Image
             source={require('../../Assets/Images/SignOutIcon.png')}
             style={{width: 30, height: 30}}
