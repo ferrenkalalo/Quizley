@@ -19,10 +19,9 @@ const Quiz = ({navigation}) => {
 
   const getQuiz = async () => {
     const url =
-      'https://opentdb.com/api.php?amount=15&type=multiple&encode=url3986';
+      'https://opentdb.com/api.php?amount=10&type=multiple&encode=url3986';
     const response = await fetch(url);
     const data = await response.json();
-    //console.log(data.results[0]);
     setQuestion(data.results);
     setOpt(generateOptAndShuffle(data.results[0]));
   };
@@ -48,12 +47,17 @@ const Quiz = ({navigation}) => {
     if (_opt === question[ques].correct_answer) {
       setScore(score + 1);
     }
-    if (ques !== 14) {
+    if (ques !== 9) {
       nextQues();
     } else {
-      navigation.navigate('Result');
+      showResult();
     }
-    console.log(score);
+  };
+
+  const showResult = () => {
+    navigation.navigate('Result', {
+      score: score,
+    });
   };
 
   return (
@@ -83,20 +87,20 @@ const Quiz = ({navigation}) => {
           </View>
 
           <View style={styles.buttonContainer}>
-            <Button title={'Previous'} />
+            <Button title={'PREV'} />
 
-            {ques !== 14 && (
+            {ques !== 9 && (
               <Button
                 title={'SKIP'}
                 fontWeight={'bold'}
                 onPress={() => nextQues()}
               />
             )}
-            {ques === 14 && (
+            {ques === 9 && (
               <Button
                 title={'Finish'}
                 fontWeight={'bold'}
-                onPress={() => navigation.navigate('Result')}
+                onPress={() => showResult()}
               />
             )}
           </View>
@@ -114,7 +118,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#E4EFE7',
   },
   buttonContainer: {
-    marginTop: 45,
+    marginTop: 60,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-end',

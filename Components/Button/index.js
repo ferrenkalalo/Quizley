@@ -20,6 +20,6 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: fontWeight,
     color: '#064420',
-    marginBottom: 30,
+    marginBottom: 20,
   }),
 });
