@@ -31,7 +31,7 @@ const Result = ({navigation, route}) => {
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
         <View style={styles.resultContainer}>
           <Text style={styles.resultText}>RESULTS</Text>
-          {score > 5 && (
+          {score >= 5 && (
             <Image
               source={require('../../Assets/Images/champion.png')}
               style={{width: 200, height: 200}}
